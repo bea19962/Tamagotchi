@@ -1,0 +1,34 @@
+Animation:
+Idle
+Eat
+Sleep
+Happy
+Angry
+Sad
+
+Sound
+beep
+Boop
+
+Enviorment
+Home
+Garden
+
+Mechanics
+Feeling hot and cold
+- connect to a wheaher api
+- get the ip adress of the user
+
+Planting
+ - walking 
+ - plant sprintes
+
+ going to work
+  - getting money
+  - paying taxes
+  - getting sad about it
+
+  brewing potions
+   - getting high
+
+   Gambling addiction
