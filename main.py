@@ -1,40 +1,60 @@
+import asyncio
 import pygame
 from pet import Pet
+from ui import Button, stat_bar
 from mechanic import Mechanics
-from background import BackgroundManager
-from menu import Menu
 
-pygame.init()
-screen = pygame.display.set_mode((500, 500))
-clock = pygame.time.Clock()
+async def main():
+    pygame.init()
+    screen = pygame.display.set_mode((600, 600))
+    clock = pygame.time.Clock()
 
-pet = Pet()
-mechanics = Mechanics()
-bg = BackgroundManager()
-menu = Menu()
+    pet = Pet()
+    mechanics = Mechanics()
 
-running = True
-in_menu = True
+    bg_color = (255, 220, 180)  
 
-while running:
-    dt = clock.tick(60)  # milliseconds passed since last frame
+    eat_button = Button(50, 500, 150, 50, "EAT")
+    cuddle_button = Button(225, 500, 150, 50, "CUDDLE")
+    play_button = Button(400, 500, 150, 50, "PLAY")
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if in_menu and event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                in_menu = False
-
-    if in_menu:
-        menu.draw(screen)
-    else:
+    running = True
+    while running:
+        dt = clock.tick(60)
         mechanics.update(dt)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if eat_button.is_clicked(pos):
+                    mechanics.feed()
+                    pet.state = "eat"
+                elif cuddle_button.is_clicked(pos):
+                    mechanics.cuddle()
+                    pet.state = "happy"
+                elif play_button.is_clicked(pos):
+                    mechanics.play()
+                    pet.state = "play"
+
+        screen.fill(bg_color)
+
         pet.update(dt)
-        bg.draw(screen)
         pet.draw(screen)
 
-    pygame.display.flip()
+        eat_button.draw(screen)
+        cuddle_button.draw(screen)
+        play_button.draw(screen)
+        
+        stat_bar(screen, 50, 50, 200, 20, mechanics.hunger, (200, 50, 50))
+        stat_bar(screen, 50, 80, 200, 20, mechanics.happiness, (50, 200, 50))
+        stat_bar(screen, 50, 110, 200, 20, mechanics.energy, (50, 50, 200))
 
-pygame.quit()
+        pygame.display.update()
+        await asyncio.sleep(0) 
+
+    pygame.quit()
+
+asyncio.run(main())
