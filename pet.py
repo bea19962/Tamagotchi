@@ -4,8 +4,8 @@ class Pet:
     def __init__(self):
         self.state = "idle"
         self.animations = {
-            "idle": self.load_frames("assets/sprites/pet/idle/"),
-            "eat": self.load_frames("assets/sprites/pet/eat/")
+            "idle": self.load_frames("assets/sprites/idle 1/"),
+            "eat": self.load_frames("assets/sprites/Happy 2/")
         }
         self.current_frame = 0
         self.frame_timer = 0
