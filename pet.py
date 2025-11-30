@@ -34,9 +34,20 @@ class Pet:
     def update(self, dt):
         self.frame_timer += dt
         speed = self.animSpeed.get(self.state, 150)
+        frames = self.animations[self.state]
+
         if self.frame_timer > speed:
-            self.current_frame = (self.current_frame + 1) % len(self.animations[self.state])
             self.frame_timer = 0
+            # default animtation: Idle loops forever. When a button is clicked does the other animation 1 time
+            #Todo: click queue but in main or tamagotchi
+            if self.state == "idle":
+                self.current_frame = (self.current_frame + 1) % len(frames)
+            else:
+                if self.current_frame < len(frames) - 1:
+                    self.current_frame += 1
+                else:
+                    self.state = "idle"
+                    self.current_frame = 0
 
     def draw(self, screen):
         frame = self.animations[self.state][self.current_frame]
