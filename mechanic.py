@@ -1,35 +1,25 @@
 class Mechanics:
     def __init__(self):
-        # Initial stats
-        self.hunger = 50
-        self.happiness = 50
-        self.energy = 50
+        self.hunger = 100
+        self.happiness = 100
+        self.energy = 100
 
-        # Speed of change per second
-        self.hunger_rate = 5    # hunger increases 5 per second
-        self.happiness_rate = 2 # happiness decreases 2 per second
+        self.actions = {
+            "eat":     {"hunger": +20, "happiness": +5},
+            "cuddle":  {"happiness": +15},
+            "play":    {"energy": -10, "happiness": +10},
+        }
+
+    def apply_action(self, action_name):
+        if action_name not in self.actions:
+            return
+        
+        for stat, change in self.actions[action_name].items():
+            value = getattr(self, stat)
+            setattr(self, stat, max(0, min(100, value + change)))
 
     def update(self, dt):
-        """Update stats based on time passed"""
-        seconds = dt / 1000  # dt is in milliseconds
-        self.hunger += self.hunger_rate * seconds
-        self.happiness -= self.happiness_rate * seconds
-
-        # Clamp stats between 0 and 100
-        self.hunger = min(100, max(0, self.hunger))
-        self.happiness = min(100, max(0, self.happiness))
-
-    # Interaction methods
-    def feed(self):
-        self.hunger -= 20
-        self.hunger = max(0, self.hunger)
-
-    def cuddle(self):
-        self.happiness += 15
-        self.happiness = min(100, self.happiness)
-
-    def play(self):
-        self.happiness += 20
-        self.energy -= 10
-        self.energy = max(0, self.energy)
-        self.happiness = min(100, self.happiness)
+        """Called every frame — decrease stats over time."""
+        self.hunger = max(0, self.hunger - 0.1 * dt)
+        self.energy = max(0, self.energy - 0.05 * dt)
+        self.happiness = max(0, self.happiness - 0.02 * dt)
