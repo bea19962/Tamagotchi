@@ -1,59 +1,62 @@
 import asyncio
 import pygame
+import pygame_gui
 from pet import Pet
-from ui import Button, stat_bar
+from ui import create_action_button
 from mechanic import Mechanics
 
 async def main():
     pygame.init()
-    screen = pygame.display.set_mode((600, 600))
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Tamagotchi")
     clock = pygame.time.Clock()
 
-    pet = Pet()
+    # --- UI Manager ---
+    manager = pygame_gui.UIManager((800, 600))
+    
     mechanics = Mechanics()
+    actions_buttons = {}
+    x, y = 50, 500
+    gap = 25
+    for action_name in mechanics.actions.keys():
+        actions_buttons[action_name] = create_action_button(manager, action_name.capitalize(), (x, y))
+        x += 150 + gap  # move next button to the right
 
-    bg_color = (255, 220, 180)  
-
-    eat_button = Button(50, 500, 150, 50, "EAT")
-    cuddle_button = Button(225, 500, 150, 50, "CUDDLE")
-    play_button = Button(400, 500, 150, 50, "PLAY")
+    # --- Game objects ---
+    pet = Pet()
+    bg_color = (255, 225, 225)
 
     running = True
     while running:
         dt = clock.tick(60)
-        mechanics.update(dt)
-        
+        time_delta = dt / 1000.0  # convert to seconds
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if eat_button.is_clicked(pos):
-                    mechanics.feed()
-                    pet.state = "eat"
-                elif cuddle_button.is_clicked(pos):
-                    mechanics.cuddle()
-                    pet.state = "happy"
-                elif play_button.is_clicked(pos):
-                    mechanics.play()
-                    pet.state = "play"
+            manager.process_events(event)
 
-        screen.fill(bg_color)
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                for action_name, button in actions_buttons.items():
+                    if event.ui_element == button:
+                        mechanics.apply_action(action_name)
+                        pet.state = action_name
+                        print(f"Action performed: {action_name}, points: {mechanics.actions[action_name]}")
 
+
+        # --- Update ---
+        mechanics.update(dt)
         pet.update(dt)
-        pet.draw(screen)
+        manager.update(time_delta)
 
-        eat_button.draw(screen)
-        cuddle_button.draw(screen)
-        play_button.draw(screen)
-        
-        stat_bar(screen, 50, 50, 200, 20, mechanics.hunger, (200, 50, 50))
-        stat_bar(screen, 50, 80, 200, 20, mechanics.happiness, (50, 200, 50))
-        stat_bar(screen, 50, 110, 200, 20, mechanics.energy, (50, 50, 200))
+        # --- Draw ---
+        screen.fill(bg_color)
+        pet.draw(screen)
+        manager.draw_ui(screen)
 
         pygame.display.update()
-        await asyncio.sleep(0) 
+        await asyncio.sleep(0)
 
     pygame.quit()
 
