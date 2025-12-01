@@ -9,14 +9,14 @@ class Pet:
             "idle": self.load_frames("sprites/idle/"),
             "eat": self.load_frames("sprites/sad/"),
             "sad": self.load_frames("sprites/sad/"),
-            "happy": self.load_frames("sprites/happy/"), 
+            "cuddle": self.load_frames("sprites/happy/"), 
         }
         self.animSpeed = { 
             "hello":400, 
             "idle": 400,
             "eat": 150,
             "sad":150,
-            "happy": 200
+            "cuddle": 200
         }
         self.current_frame = 0
         self.frame_timer = 0
