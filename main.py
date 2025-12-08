@@ -23,16 +23,16 @@ async def main():
     
     mechanics = Mechanics()
     actions_buttons = {}
-    x, y = 50, 500
+    x, y = 150, 500
     gap = 25
     for action_name in mechanics.actions.keys():
         actions_buttons[action_name] = create_action_button(manager, action_name.capitalize(), (x, y))
-        x += 150 + gap  # move next button to the right
+        x += 150 + gap
 
     # --- Game objects ---
     pet = Pet()
    #bg_color = theme["defaults"]["colours"]["norml_bg"]
-    bg_color = "#33ff00"
+    bg_color = "#ffffff"
 
     running = True
     while running:

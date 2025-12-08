@@ -51,4 +51,4 @@ class Pet:
 
     def draw(self, screen):
         frame = self.animations[self.state][self.current_frame]
-        screen.blit(frame, (200, 200))
+        screen.blit(frame, (300, 200))
