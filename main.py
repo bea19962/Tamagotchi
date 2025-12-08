@@ -4,6 +4,11 @@ import pygame_gui
 from pet import Pet
 from ui import create_action_button
 from mechanic import Mechanics
+import json
+
+with open("theme.json", "r") as f:
+    theme = json.load(f)
+
 
 async def main():
     pygame.init()
@@ -12,7 +17,9 @@ async def main():
     clock = pygame.time.Clock()
 
     # --- UI Manager ---
-    manager = pygame_gui.UIManager((800, 600))
+    manager = pygame_gui.UIManager((800, 600), 'theme.json')
+    manager.set_visual_debug_mode(True)
+    
     
     mechanics = Mechanics()
     actions_buttons = {}
@@ -24,7 +31,8 @@ async def main():
 
     # --- Game objects ---
     pet = Pet()
-    bg_color = (255, 225, 225)
+   #bg_color = theme["defaults"]["colours"]["norml_bg"]
+    bg_color = "#33ff00"
 
     running = True
     while running:

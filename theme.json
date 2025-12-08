@@ -1,25 +1,32 @@
 {
   "defaults": {
-    "colours": {
-      "normal_bg": "#FFFFFF"
+    "font": {
+      "name": "Pixellari",
+      "size": 8
+    },
+    "font_paths": {
+      "pixelfont": "fonts/Pixellari.ttf"
     }
   },
-  "button": {
-    "misc": {
-      "border_width": "10",
-      "shadow_width": "2"
-    }
-  },
+
   "@action_buttons": {
+    "colours": {
+      "normal_bg": "#FFFFFF",
+      "hovered_bg": "#000000",
+      "normal_text": "#000000",
+      "hovered_text": "#FFFFFF",
+      "normal_border": "#000000",
+      "hovered_border": "#000000"
+    },
     "misc": {
-      "shadow_width": "5",
-      "shape": "rounded_rectangle",
-      "colour": "#FFAA00"
-    }
-  },
-  "#action_button": {
-    "misc": {
-      "text_horiz_alignment": "left"
+      "shape": "rectangle",
+      "border_width": 3,
+      "text_horiz_alignment_padding": 10,
+      "text_vert_alignment_padding": 10
+    },
+    "font": {
+      "name": "Pixellari",
+      "size": 12
     }
   }
 }
