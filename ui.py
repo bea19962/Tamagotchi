@@ -2,7 +2,7 @@ import pygame
 from pygame_gui.core import ObjectID
 from pygame_gui.elements import UIButton, UIWindow
 
-def create_action_button(manager, text, pos, size=(-1, -1)):
+def create_action_button(manager, text, pos, size=(150, 50)):
     return UIButton(
         relative_rect=pygame.Rect(pos, size),
         text=text,
