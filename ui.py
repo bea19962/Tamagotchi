@@ -1,6 +1,6 @@
 import pygame
 from pygame_gui.core import ObjectID
-from pygame_gui.elements import UIButton, UIWindow
+from pygame_gui.elements import UIButton, UIWindow, UIProgressBar
 
 def create_action_button(manager, text, pos, size=(150, 50)):
     return UIButton(
@@ -15,4 +15,11 @@ def create_window(manager):
         rect=pygame.Rect((100, 100), (600, 400)),
         manager=manager,
         window_display_title="My Tamagotchi"
+    )
+    
+def create_status_bar(manager, object_id_name="status_bar"):
+    return UIProgressBar(
+        relative_rect=pygame.Rect((100, 100), (100, 30)),
+        manager=manager,
+        object_id=ObjectID(class_id='@status_bar', object_id=f'#{object_id_name}')
     )

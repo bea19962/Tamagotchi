@@ -2,7 +2,7 @@ import asyncio
 import pygame
 import pygame_gui
 from pet import Pet
-from ui import create_action_button
+from ui import create_action_button, create_status_bar
 from mechanic import Mechanics
 import json
 
@@ -28,7 +28,9 @@ async def main():
     for action_name in mechanics.actions.keys():
         actions_buttons[action_name] = create_action_button(manager, action_name.capitalize(), (x, y))
         x += 150 + gap
-
+        
+    # --- Status bars ---
+    hunger_bar = create_status_bar(manager, object_id_name="hunger")
     # --- Game objects ---
     pet = Pet()
    #bg_color = theme["defaults"]["colours"]["norml_bg"]
@@ -57,6 +59,10 @@ async def main():
         mechanics.update(dt)
         pet.update(dt)
         manager.update(time_delta)
+        
+        # --- Update status bars ---
+        hunger_bar
+
 
         # --- Draw ---
         screen.fill(bg_color)
