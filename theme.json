@@ -33,7 +33,7 @@
   "@status_bar": {
     "colours": {
       "normal_border": "#AAAAAA",
-      "filled_bar": "#f4251b",
+      "filled_bar": "#000000",
       "unfilled_bar": "#CCCCCC"
     },
     "misc": {

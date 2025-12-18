@@ -30,7 +30,7 @@ async def main():
         x += 150 + gap
         
     # --- Status bars ---
-    hunger_bar = create_status_bar(manager, object_id_name="hunger")
+    hunger_bar = create_status_bar(manager, "hunger")
     # --- Game objects ---
     pet = Pet()
    #bg_color = theme["defaults"]["colours"]["norml_bg"]

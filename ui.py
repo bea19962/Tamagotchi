@@ -17,9 +17,9 @@ def create_window(manager):
         window_display_title="My Tamagotchi"
     )
     
-def create_status_bar(manager, object_id_name="status_bar"):
+def create_status_bar(manager, name):
     return UIProgressBar(
         relative_rect=pygame.Rect((100, 100), (100, 30)),
         manager=manager,
-        object_id=ObjectID(class_id='@status_bar', object_id=f'#{object_id_name}')
+        object_id=ObjectID(class_id='@status_bar', object_id=f'#{name}')
     )
