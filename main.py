@@ -61,7 +61,8 @@ async def main():
         manager.update(time_delta)
         
         # --- Update status bars ---
-        hunger_bar
+        hunger_bar.set_current_progress(mechanics.hunger / 100)
+
 
 
         # --- Draw ---
